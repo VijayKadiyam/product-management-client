@@ -1,5 +1,7 @@
 <template>
-  <v-app id="productms">
+  <v-app id="productms"
+    class="background"
+  >
 
     <Toolbar></Toolbar>
 
@@ -33,5 +35,10 @@
   }
   .text {
     font-weight: 400;
+  }
+
+  .background {
+    background: url('/src/assets/background.jpg') !important;
+    background-size: cover !important;
   }
 </style>

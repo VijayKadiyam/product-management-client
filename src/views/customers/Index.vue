@@ -58,9 +58,9 @@
                 >
                   <v-icon color="teal">edit</v-icon>
                 </v-btn>
-                <v-btn icon class="mx-0" @click="">
+                <!-- <v-btn icon class="mx-0" @click="">
                   <v-icon color="pink">delete</v-icon>
-                </v-btn>
+                </v-btn> -->
               </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">

@@ -64,9 +64,10 @@ class Form {
   }
 
   validate(refs) {
-    Object.keys(this.data()).forEach(item  =>  {
+    Object.keys(refs).forEach(item => {
       if(refs[item])
-        refs[item].validate(true);
+        item != 'originalData' ? refs[item].validate(true) : '' 
+
     })
   }
 

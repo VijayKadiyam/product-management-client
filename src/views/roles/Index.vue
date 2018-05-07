@@ -10,6 +10,9 @@
               <v-btn small color="primary"
                 to="/roles/create"
               >Add New</v-btn>
+              <v-btn small color="error"
+                to="/roles/assign-permissions"
+              >Assign Permissions To roles</v-btn>
             </h3>
             
             <v-spacer></v-spacer>
@@ -30,15 +33,20 @@
           >
             <template slot="items" slot-scope="props">
               <td>{{ props.item.role }}</td> 
+              <td>
+                <div
+                  v-for="permission in props.item.permissions"
+                  :key="permission.index"
+                >
+                  <b>Module: </b>{{ permission.module.module }} ({{ permission.label }})
+                </div>
+              </td> 
               <td class="justify-center layout px-0">
                 <v-btn icon class="mx-0"
                   :to="`/roles/${props.item.id}/edit`"
                 >
                   <v-icon color="teal">edit</v-icon>
-                </v-btn>
-                <!-- <v-btn icon class="mx-0" @click="">
-                  <v-icon color="pink">delete</v-icon>
-                </v-btn> -->
+                </v-btn> 
               </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -63,14 +71,15 @@
       form: new Form,
       search: '',
       headers: [
-        { text: 'Role', sortable:false, value: 'name' }, 
+        { text: 'Role', sortable:false, value: 'role' }, 
+        { text: 'Permissions', sortable:false, value: 'permissions' }, 
       ],
       items: []
     }),
 
     mounted() {
       this.form.get('/api/roles')
-        .then(data => {
+        .then(data => { 
           this.items = data.data;
         })
         .catch(errors => {

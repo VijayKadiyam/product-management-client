@@ -6,10 +6,10 @@
         <v-card class="elevation-12"> 
 
           <v-card-title primary-title>
-            <h3 class="headline mb-0">Users
+            <h3 class="headline mb-0">Permissions
               <v-btn small color="primary"
-                to="/users/create"
-              >Add New</v-btn>
+                to="/permissions/create"
+              >Add New</v-btn> 
             </h3>
             
             <v-spacer></v-spacer>
@@ -28,20 +28,16 @@
             :items="items"
             :search="search"
           >
-            <template slot="items" slot-scope="props"> 
-              <td class="text-xs-left">{{ props.item.name }}</td> 
-              <td class="text-xs-left">{{ props.item.email }}</td> 
-              <td class="text-xs-left">{{ props.item.roles }}</td> 
-
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.module.module }}</td> 
+              <td>{{ props.item.label }}</td> 
+              <td>{{ props.item.permission }}</td> 
               <td class="justify-center layout px-0">
                 <v-btn icon class="mx-0"
-                  :to="`/users/${props.item.id}/edit`"
+                  :to="`/permissions/${props.item.id}/edit`"
                 >
                   <v-icon color="teal">edit</v-icon>
-                </v-btn>
-                <!-- <v-btn icon class="mx-0" @click="">
-                  <v-icon color="pink">delete</v-icon>
-                </v-btn> -->
+                </v-btn> 
               </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -66,26 +62,17 @@
       form: new Form,
       search: '',
       headers: [
-        { text: 'Name', sortable:false, value: 'name' }, 
-        { text: 'Email', sortable:false, value: 'name' }, 
-        { text: 'Roles', sortable:false, value: 'roles' }, 
+        { text: 'Module', sortable:false, value: 'module' }, 
+        { text: 'Permission Label', sortable:false, value: 'label' }, 
+        { text: 'Permission code', sortable:false, value: 'permission' } 
       ],
       items: []
     }),
 
     mounted() {
-      this.form.get('/api/users')
-        .then(data => { 
-          data.data.forEach(user => {
-            this.items.push({
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              roles: `
-                ${user.roles.map(role => role.role)}
-              `
-            })
-          })
+      this.form.get('/api/permissions')
+        .then(data => {
+          this.items = data.data;
         })
         .catch(errors => {
 

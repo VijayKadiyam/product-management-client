@@ -12,7 +12,7 @@
 
     <span class="text"
       v-if="authStatus"
-    >
+    > 
       <h3>
          Company: <b>{{ company.name }}</b>
       </h3>
@@ -32,10 +32,10 @@
 
     <span
       v-if="authStatus"
-    >
-      <b>
-        Logged In as : {{ user.name }} ( {{ user.email }} )
-      </b>
+    > 
+      <b>Logged In as : </b> {{ user.name }} ( {{ user.email }} ) &nbsp; &nbsp;
+      
+      <b>Role: </b>{{ user.role }}  
     </span> &nbsp;
 
     <!-- If the user is logged in  -->
@@ -69,11 +69,11 @@
       ]),
 
       authStatus() { 
-        if(this.user.api_token && this.user.id) { 
-
-          this.navToggle({
-            opened: true
-          })
+        if(this.user.api_token && this.user.id) {  
+          
+            this.navToggle({
+              opened: true
+            })
 
           return true;
         } 
@@ -100,12 +100,15 @@
 
     methods: {
       ...mapActions([
-        'navToggle', 'authInitialize', 'authRemove', 'configInitialize'
+        'navToggle', 'authInitialize', 'authRemove', 'configRemove', 'configInitialize'
       ]),
 
       logout() {
         this.authRemove();
         this.authInitialize(); 
+
+        this.configRemove()
+        this.configInitialize()  
 
         this.$router.push('/login')
       }

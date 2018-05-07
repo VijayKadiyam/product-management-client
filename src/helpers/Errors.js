@@ -5,7 +5,8 @@ class Errors {
   }
 
   has(field) { 
-    return !!this.errors.hasOwnProperty(field);
+    if(this.errors)
+      return !!this.errors.hasOwnProperty(field);
   }
 
   any() {

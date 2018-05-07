@@ -29,14 +29,14 @@
             :search="search"
           >
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.stockCategory }}</td> 
-              <td class="text-xs-left">{{ props.item.unit }}</td> 
-              <td class="text-xs-left">{{ props.item.unit }}</td> 
+              <td v-html="props.item.stockCategory"></td> 
+              <td class="text-xs-left">{{ props.item.qty }}</td> 
+              <td class="text-xs-left">{{ props.item.price }}</td> 
               <td class="justify-center layout px-0">
                 <v-btn icon class="mx-0"
-                  :to="`/stocks/${props.item.id}`"
+                  :to="`/stocks/${props.item.id}/edit`"
                 >
-                  <v-icon color="pink">pageview</v-icon>
+                  <v-icon color="teal">edit</v-icon>
                 </v-btn> 
               </td>
             </template>
@@ -63,19 +63,25 @@
       search: '',
       headers: [
         { text: 'Stock Category Name', sortable:false, value: 'name' },
-        { text: 'Latest Purchase Price', sortable:false, value: 'name' },
-        { text: 'Quantity Left', value: 'pan_no' }, 
-        { text: 'Actions', value: 'name' }
+        { text: 'Quantity', value: 'qty' }, 
+        { text: 'Latest Purchase Price', sortable:false, value: 'price' },
       ],
       items: []
     }),
 
     mounted() {
-      this.form.get('/api/stock-categories')
+      this.form.get('/api/stocks')
         .then(data => { 
           data.data.forEach(item  =>  {
             this.items.push({
-              stockCategory: item.name
+              id: item.id,
+              stockCategory: `
+                ${item.stock_category.name} 
+                <br>
+                <b>Supplier: </b> ${item.supplier.name}
+              `,
+              price: 'Rs ' + item.price,
+              qty: item.qty
             }) 
           }) 
         })

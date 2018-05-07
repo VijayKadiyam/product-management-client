@@ -43,6 +43,26 @@
                 v-model="form.password_confirmation"
               ></v-text-field> 
 
+              <v-layout row wrap>  
+                <v-flex xs6>
+                  <v-subheader>Select Role &nbsp; 
+                    <router-link to="/roles/create">[Add New Role]</router-link>
+                  </v-subheader>
+
+                </v-flex>
+                <v-flex xs6>
+                  <v-select
+                    autocomplete
+                    name="role_id"
+                    ref="role_id"
+                    :items="roles"
+                    v-model="form.role_id"
+                    label="Select Role"
+                    :rules="[() => !form.errors.has('role_id') || form.errors.get('role_id') ]" 
+                  ></v-select>
+                </v-flex>  
+              </v-layout>
+
             </v-card-text>
 
             <v-card-actions>
@@ -73,12 +93,26 @@
         name: '', 
         email: '',
         password: '',
-        password_confirmation: '' 
+        password_confirmation: '',
+        role_id: ''
       }),
       companies: [],
+      roles: []
     }),
 
     mounted() {
+
+      this.form.get('/api/roles')
+        .then(data => {
+          data.data.forEach(role => {
+            if(role.role != "SuperAdmin")
+              this.roles.push({
+                id: role.id,  
+                text: role.role,
+                value: role.id
+              })
+          })
+        })
 
       this.form.get('/api/companies')
         .then(data  =>  {

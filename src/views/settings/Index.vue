@@ -15,7 +15,11 @@
 
             <v-layout row wrap>
               <v-flex xs6>
-                <v-subheader>Company</v-subheader>
+                <v-subheader>Company&nbsp;
+                    <router-link to="/companies/create">
+                      [Add New Company]
+                    </router-link>
+                  </v-subheader>
               </v-flex>
               <v-flex xs6>
                 <v-select
@@ -25,6 +29,22 @@
                   single-line
                   @input="changeCompany"
                 ></v-select>
+              </v-flex> 
+
+              <v-flex xs6>
+                <v-subheader>Bill Format</v-subheader>
+              </v-flex>
+              <v-flex xs4>
+                  <v-text-field prepend-icon="format_list_numbered" name="billFormat" label="Bill No. Format" id="billFormat" type="text"   
+                  v-model="billFormat"  
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-btn small color="primary"
+                  @click="changeBillFormat"
+                >
+                  Update
+                </v-btn>
               </v-flex>
 
               <v-flex xs6>
@@ -59,6 +79,7 @@
       form: new Form,
       companies: [],
       selectedCompany: '',
+      billFormat: '',
       colors: [
         { text: 'Red', value: 'red' },
         { text: 'Pink', value: 'pink' },
@@ -69,12 +90,13 @@
         { text: 'Amber', value: 'amber' },
         { text: 'Orange', value: 'orange' },
       ],
-      selectedColor: ''
+      selectedColor: '',
+      settings: []
     }),
 
     computed: {
       ...mapGetters([
-        'company', 'color'
+        'company', 'color', 'bill_format'
       ])
     },
 
@@ -92,6 +114,19 @@
         })
 
       this.selectedColor = this.color;
+      this.billFormat = this.bill_format
+
+      this.form.get('/api/settings')
+        .then(data => {
+          console.log(data.data)
+          this.configSet({
+            bill_format: this.billFormat
+          })
+
+          this.configInitialize();
+          
+          this.billFormat = data.data.bill_format
+        })
     },
 
     methods: {
@@ -109,15 +144,37 @@
                 id: data.data.id,
                 name: data.data.name
               } 
-            }),
+            }) 
+
+            location.reload();
 
             this.configInitialize() 
+
+
           }) 
       },
 
       changeColor() {
         this.configSet({
           color: this.selectedColor
+        })
+
+        this.configInitialize();
+      },
+
+      changeBillFormat() {
+        this.form = new Form({
+          'bill_format' : this.billFormat
+        });
+
+        this.form.post('/api/settings')
+          .then(data => {
+            console.log(data.data);
+            alert("Format Updated");            
+          })
+
+        this.configSet({
+          bill_format: this.billFormat
         })
 
         this.configInitialize();

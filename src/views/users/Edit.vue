@@ -33,6 +33,26 @@
                 :rules="[() => !form.errors.has('email') || form.errors.get('email') ]"
               ></v-text-field> 
 
+              <v-layout row wrap>  
+                <v-flex xs6>
+                  <v-subheader>Select Role &nbsp; 
+                    <router-link to="/roles/create">[Add New Role]</router-link>
+                  </v-subheader>
+
+                </v-flex>
+                <v-flex xs6>
+                  <v-select
+                    autocomplete
+                    name="role_id"
+                    ref="role_id"
+                    :items="roles"
+                    v-model="form.role_id"
+                    label="Select Role"
+                    :rules="[() => !form.errors.has('role_id') || form.errors.get('role_id') ]" 
+                  ></v-select>
+                </v-flex>  
+              </v-layout>
+
             </v-card-text>
 
             <v-card-actions>
@@ -60,15 +80,34 @@
 
     data: () => ({
       form: new Form({
-        name: '' 
-      })
+        name: '',
+        role_id: ''
+      }),
+      roles: []
     }),
 
     mounted() {
 
+      this.form.get('/api/roles')
+        .then(data => {
+          data.data.forEach(role => {
+            if(role.role != "SuperAdmin")
+              this.roles.push({
+                id: role.id,  
+                text: role.role,
+                value: role.id
+              })
+          })
+        })
+
+
       this.form.get(`/api/users/${this.$route.params.user_id}`)
         .then(data  =>  {
-          this.form = new Form(data.data); 
+          this.form = new Form({
+            name: data.data.name,
+            email: data.data.email,
+            role_id: parseInt(`${data.data.roles[0] ? data.data.roles[0].id : '' }`)
+          }) 
         })
         .catch(errors => {
 

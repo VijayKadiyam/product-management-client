@@ -91,13 +91,13 @@
       register() {
         this.form.post('/api/register')
           .then(data  =>  {
+
             this.authSet(data)
             this.authInitialize();
-
             this.configRemove();
             this.configInitialize();
 
-            this.$router.push('/');
+            window.location.href = '/settings' 
           })
           .catch(errors => {
             this.form.validate(this.$refs);

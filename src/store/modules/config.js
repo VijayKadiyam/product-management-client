@@ -8,7 +8,8 @@ const state = {
     id: Number,
     name: ''
   },
-  color: 'light-blue'
+  color: 'light-blue',
+  bill_format: ''
 }
 
 const mutations = {
@@ -20,6 +21,8 @@ const mutations = {
       localStorage.setItem('companyName', config.company.name) 
     if(config.hasOwnProperty('color'))
       localStorage.setItem('color', config.color) 
+    if(config.hasOwnProperty('bill_format'))
+      localStorage.setItem('bill_format', config.bill_format) 
   },
 
   // To initialize config state variables
@@ -28,6 +31,8 @@ const mutations = {
     state.company.name = localStorage.getItem('companyName');
     if(localStorage.getItem('color'))
       state.color = localStorage.getItem('color');
+    if(localStorage.getItem('bill_format'))
+      state.bill_format = localStorage.getItem('bill_format');
   },
 
   // To remove the localStorage config values

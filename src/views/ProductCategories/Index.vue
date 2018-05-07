@@ -6,9 +6,9 @@
         <v-card class="elevation-12"> 
 
           <v-card-title primary-title>
-            <h3 class="headline mb-0">Stock categories
+            <h3 class="headline mb-0">Product categories
               <v-btn small color="primary"
-                to="/stock-categories/create"
+                to="/product-categories/create"
               >Add New</v-btn>
             </h3>
             
@@ -29,19 +29,19 @@
             :search="search"
           >
             <template slot="items" slot-scope="props">
-              <td>{{ props.item.stock_category }}</td> 
-              <td class="text-xs-left">{{ props.item.unit }}</td> 
-              <td>
-                {{ props.item.quantity_left }}
+              <td v-html="props.item.product_category"></td> 
+              <td v-html="props.item.product_description"></td>  
+              <td> 
+                {{ props.item.quantity_left }} 
                 <v-btn flat small color="primary" 
-                  @click="updateStockCategoryQuantity(props.item.id)"
+                  @click="updateProductCategoryQuantity(props.item.id)"
                 > 
                   [ Refresh ]
                 </v-btn> 
               </td>  
               <td class="justify-center layout px-0">
                 <v-btn icon class="mx-0"
-                  :to="`/stock-categories/${props.item.id}/edit`"
+                  :to="`/product-categories/${props.item.id}/edit`"
                 >
                   <v-icon color="teal">edit</v-icon>
                 </v-btn>
@@ -72,27 +72,41 @@
       form: new Form,
       search: '',
       headers: [
-        { text: 'Stock Category Name', sortable:false, value: 'stock_category' },
-        { text: 'Unit', value: 'unit' }, 
-        { text: 'Quantity Left', value: 'quantity_left' }, 
-        { text: 'Actions', value: 'name' }
+        { text: 'Product Category Name', sortable:false, value: 'product_category' },
+        { text: 'Product Description', value: 'product_description' }, 
+        { text: 'Quantity left', value: 'quantity_left' }, 
+        { text: 'Actions', value: '' }
       ],
       items: []
     }),
 
     mounted() {
-      this.form.get('/api/stock-categories')
+      this.form.get('/api/product-categories')
         .then(data => { 
-
-          data.data.forEach(item => { 
+          data.data.forEach(item => {
             this.items.push({
               id: item.id,
-              stock_category: item.name,
-              unit: item.unit.unit,
+              product_category: `
+                ${item.name}
+                <br>
+                <b>HSN Code: </b>${item.hsn_code}
+              `,
+              product_description: `
+                ${
+                  item.stock_categories.map(stock => {
+                    return `
+                      <br>
+                      ${stock.name}: ${stock.pivot.value} ${stock.unit.unit}
+                    `
+                  })
+                }
+              `,
               quantity_left: item.quantity_left
-            }) 
-          }) 
+            }); 
+          })
 
+          // this.items = data.data 
+          
         })
         .catch(errors => {
 
@@ -100,8 +114,8 @@
     },
 
     methods: {
-      updateStockCategoryQuantity(id) {
-        this.form.get(`/api/stock-categories/${id}/refresh-quantity`)
+      updateProductCategoryQuantity(id) {
+        this.form.get(`/api/product-categories/${id}/refresh-quantity`)
           .then(data => {
             location.reload();
           })

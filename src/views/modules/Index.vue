@@ -6,9 +6,9 @@
         <v-card class="elevation-12"> 
 
           <v-card-title primary-title>
-            <h3 class="headline mb-0">Users
+            <h3 class="headline mb-0">Modules
               <v-btn small color="primary"
-                to="/users/create"
+                to="/modules/create"
               >Add New</v-btn>
             </h3>
             
@@ -28,20 +28,14 @@
             :items="items"
             :search="search"
           >
-            <template slot="items" slot-scope="props"> 
-              <td class="text-xs-left">{{ props.item.name }}</td> 
-              <td class="text-xs-left">{{ props.item.email }}</td> 
-              <td class="text-xs-left">{{ props.item.roles }}</td> 
-
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.module }}</td> 
               <td class="justify-center layout px-0">
                 <v-btn icon class="mx-0"
-                  :to="`/users/${props.item.id}/edit`"
+                  :to="`/modules/${props.item.id}/edit`"
                 >
                   <v-icon color="teal">edit</v-icon>
-                </v-btn>
-                <!-- <v-btn icon class="mx-0" @click="">
-                  <v-icon color="pink">delete</v-icon>
-                </v-btn> -->
+                </v-btn> 
               </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -66,26 +60,15 @@
       form: new Form,
       search: '',
       headers: [
-        { text: 'Name', sortable:false, value: 'name' }, 
-        { text: 'Email', sortable:false, value: 'name' }, 
-        { text: 'Roles', sortable:false, value: 'roles' }, 
+        { text: 'Module', sortable:false, value: 'module' }, 
       ],
       items: []
     }),
 
     mounted() {
-      this.form.get('/api/users')
-        .then(data => { 
-          data.data.forEach(user => {
-            this.items.push({
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              roles: `
-                ${user.roles.map(role => role.role)}
-              `
-            })
-          })
+      this.form.get('/api/modules')
+        .then(data => {
+          this.items = data.data;
         })
         .catch(errors => {
 

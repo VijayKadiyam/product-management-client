@@ -65,7 +65,7 @@
       ...mapGetters([
         'user', 'color'
       ])
-    },
+    }, 
 
     methods: {
 
@@ -84,7 +84,8 @@
             this.configRemove()
             this.configInitialize()  
 
-            this.$router.push('/settings');
+            window.location.href = '/settings';
+
           })
           .catch(errors   => {
             this.form.validate(this.$refs); 

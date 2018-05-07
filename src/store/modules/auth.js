@@ -14,11 +14,18 @@ const mutations = {
   // Initialize the local storage
   [types.AUTH_SET] (state, user) {
     console.log(user);
-    localStorage.setItem('id', user.id)
-    localStorage.setItem('name', user.name)
-    localStorage.setItem('email', user.email)
-    localStorage.setItem('api_token', user.api_token)
-    localStorage.setItem('role', user.role)
+    if(user.id)
+      localStorage.setItem('id', user.id)
+    if(user.name)
+      localStorage.setItem('name', user.name)
+    if(user.email)
+      localStorage.setItem('email', user.email)
+    if(user.api_token)
+      localStorage.setItem('api_token', user.api_token)
+    if(user.roles &&user.roles.length){
+      localStorage.setItem('role', user.roles[0].role)
+      localStorage.setItem('role_id', user.roles[0].id)
+    }
  }, 
 
   // Initialize the state variables
@@ -28,6 +35,7 @@ const mutations = {
     state.user.email = localStorage.getItem('email')
     state.user.api_token = localStorage.getItem('api_token')
     state.user.role = localStorage.getItem('role')
+    state.user.role_id = localStorage.getItem('role_id')
   },
 
   // Remove the local storage values
@@ -37,6 +45,7 @@ const mutations = {
     localStorage.removeItem('email')
     localStorage.removeItem('api_token')
     localStorage.removeItem('role')
+    localStorage.removeItem('role_id')
   }
 }
   

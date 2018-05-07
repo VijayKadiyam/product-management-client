@@ -95,6 +95,7 @@
 
 <script type="text/javascript">
   
+  import  { mapGetters, mapActions } from 'vuex'
   import Form from 'helpers/Form.js'
 
   export default {
@@ -113,12 +114,64 @@
       })
     }),
 
+    computed: {
+      ...mapGetters([
+        'user'
+      ])
+    },  
+
     methods: {
+
+      ...mapActions([
+        'authSet','authInitialize', 'configSet', 'configInitialize'
+      ]),
 
       createCompany() {
         this.form.post('/api/companies')
           .then(data  =>  {
-            this.$router.push('/companies');
+            let role_id, permissionIds, user_id;
+            user_id = this.user.id;
+
+            this.configSet({
+              company: {
+                id: data.data.id,
+                name: data.data.name
+              } 
+            })
+            this.configInitialize() 
+            
+
+            this.form = new Form({ role: 'Admin' });
+            this.form.post('/api/roles')
+              .then(data => {
+                role_id = data.data.id
+
+                this.authSet({
+                  data: {
+                    roles: [
+                      {
+                        id: data.data.id,
+                        role: data.data.role
+                      }
+                    ] 
+                  } 
+                })
+                this.authInitialize() 
+
+                this.form.get('/api/permissions')
+                  .then(data => {
+                    permissionIds = data.data.map(permission => permission.id);
+
+                    this.form = new Form({ role_id: role_id, permissionIds: permissionIds });
+                    this.form.post('/api/roles/assign-permissions') 
+                      .then(data => {
+                        
+                        this.form = new Form({ user_id: user_id, roleIds: [ role_id ] })
+                        this.form.post('/api/users/assign-roles') 
+                          .then(data => window.location.href = '/companies')
+                      }) 
+                  })
+              });  
           })
           .catch(errors => {
             this.form.validate(this.$refs)
