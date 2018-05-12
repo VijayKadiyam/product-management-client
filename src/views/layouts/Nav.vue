@@ -152,7 +152,13 @@
           { icon: 'view_module', text: 'Modules', url: '/modules', permission: this.user.role == 'SuperAdmin' ? true : false },
 
 
-          // { heading: 'Reports' },
+          { heading: 'Reports' },
+          { text: 'Sales Report', url: '/sales-report' , permission: true },
+          // { text: 'Stocks Report', url: '/stocks-products-report' , permission: true },
+          { text: 'Products Report', url: '/products-report' , permission: true },
+
+
+
         ];
       }
     }

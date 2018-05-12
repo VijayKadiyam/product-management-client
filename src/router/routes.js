@@ -68,6 +68,10 @@ import ModulesCreate from '../views/modules/Create.vue'
 import ModulesEdit from '../views/modules/Edit.vue'
 // assign permissions to roles
 import AssignPermissions from '../views/roles/assign-permissions/Index.vue'
+// Reports
+import SalesReport from '../views/reports/Sales.vue'
+import StocksReport from '../views/reports/Stocks.vue'
+import ProductsReport from '../views/reports/Products.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -141,6 +145,10 @@ const routes = [
   { path: '/modules/:module_id/edit', component: ModulesEdit },
   // assign permissions to roles
   { path: '/roles/assign-permissions', component: AssignPermissions },
+  // Reports
+  { path: '/sales-report', component: SalesReport },
+  { path: '/stocks-report', component: StocksReport },
+  { path: '/products-report', component: ProductsReport }
 ];
 
 export default routes;

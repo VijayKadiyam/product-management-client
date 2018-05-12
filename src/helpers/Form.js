@@ -39,7 +39,7 @@ class Form {
     let api_token = store.getters.user.api_token;
     let company_id = store.getters.company.id;
     axios.defaults.headers.common['Authorization'] = "Bearer " + api_token;
-    axios.defaults.headers.common['company_id'] = company_id;
+    axios.defaults.headers.common['company-id'] = company_id;
 
     return new Promise((resolve, reject) => {
       axios[requestType](baseUrl + url, this.data()) 

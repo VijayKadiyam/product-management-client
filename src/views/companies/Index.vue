@@ -30,6 +30,8 @@
           >
             <template slot="items" slot-scope="props">
               <td>{{ props.item.name }}</td>
+              <td class="text-xs-left">{{ props.item.contact1 }}</td>
+              <td class="text-xs-left">{{ props.item.email }}</td>
               <td class="text-xs-left">{{ props.item.pan_no }}</td>
               <td class="text-xs-left">{{ props.item.gstn_no }}</td>
               <td class="text-xs-left">
@@ -80,6 +82,8 @@
       search: '',
       headers: [
         { text: 'Company Name', sortable:false, value: 'name' },
+        { text: 'Contact', value: 'Phone No.'},
+        { text: 'Email', value: 'Email'},
         { text: 'PAN No', value: 'pan_no' },
         { text: 'GST NO', value: 'gstn_no' },
         { text: 'Address', value: 'address' },
@@ -92,7 +96,7 @@
     mounted() {
       this.form.get('/api/companies')
         .then(data => {
-          this.items = data.data;
+          this.items = data.data; 
         })
         .catch(errors => {
 

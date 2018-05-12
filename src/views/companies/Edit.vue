@@ -26,6 +26,18 @@
                 :rules="[() => !form.errors.has('name') || form.errors.get('name') ]"
               ></v-text-field> 
 
+              <v-text-field prepend-icon="email" name="email" label="Email id" id="email" type="text" 
+                ref="email"
+                v-model="form.email"
+                :rules="[() => !form.errors.has('email') || form.errors.get('email') ]"
+              ></v-text-field> 
+
+              <v-text-field prepend-icon="phone" name="contact1" label="Phone no" id="contact1" type="text" 
+                ref="contact1"
+                v-model="form.contact1"
+                :rules="[() => !form.errors.has('contact1') || form.errors.get('contact1') ]"
+              ></v-text-field> 
+
               <v-text-field prepend-icon="done" name="pan_no" label="PAN no." id="pan_no" type="text" 
                 ref="pan_no"
                 v-model="form.pan_no"
@@ -102,6 +114,8 @@
     data: () => ({
       form: new Form({
         name: '',
+        email: '',
+        contact1: '',
         pan_no: '',
         gstn_no: '',
         address: '',
