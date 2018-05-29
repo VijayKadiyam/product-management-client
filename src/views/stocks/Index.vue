@@ -29,6 +29,7 @@
             :search="search"
           >
             <template slot="items" slot-scope="props">
+              <td v-html="props.item.date"></td> 
               <td v-html="props.item.stockCategory"></td> 
               <td class="text-xs-left">{{ props.item.qty }}</td> 
               <td class="text-xs-left">{{ props.item.price }}</td> 
@@ -62,7 +63,8 @@
       form: new Form,
       search: '',
       headers: [
-        { text: 'Stock Category Name', sortable:false, value: 'name' },
+        { text: 'Date', sortable:false, value: 'date' },
+        { text: 'Stock Category Name', sortable:false, value: 'stockCategory' },
         { text: 'Quantity', value: 'qty' }, 
         { text: 'Latest Purchase Price', sortable:false, value: 'price' },
       ],
@@ -75,6 +77,11 @@
           data.data.forEach(item  =>  {
             this.items.push({
               id: item.id,
+              date: `
+                <b>Date: </b>${item.date}
+                <br>
+                ${item.invoice_no}
+              `,
               stockCategory: `
                 ${item.stock_category.name} 
                 <br>

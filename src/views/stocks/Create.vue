@@ -23,6 +23,28 @@
               <v-layout row wrap> 
 
                 <v-flex xs6>
+                  <v-subheader>Date</v-subheader>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field prepend-icon="format_list_numbered" name="date" label="Date" id="date" type="text" 
+                    ref="date"
+                    v-model="form.date"
+                    :rules="[() => !form.errors.has('date') || form.errors.get('date') ]"
+                  ></v-text-field>
+                </v-flex>
+
+                <v-flex xs6>
+                  <v-subheader>Invoice No.</v-subheader>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field prepend-icon="format_list_numbered" name="invoice_no" label="Invoice No." id="invoice_no" type="text" 
+                    ref="invoice_no"
+                    v-model="form.invoice_no"
+                    :rules="[() => !form.errors.has('invoice_no') || form.errors.get('invoice_no') ]"
+                  ></v-text-field>
+                </v-flex>
+
+                <v-flex xs6>
                   <v-subheader>Stock Category</v-subheader>
                 </v-flex>
                 <v-flex xs6>
@@ -60,7 +82,7 @@
                 </v-flex>
                 <v-flex xs4>  
                   <h4 class="headline mb-0">{{ stockCategoryUnit }}</h4>
-                </v-flex>
+                </v-flex> 
 
               </v-layout> 
 
@@ -97,6 +119,8 @@
 
     data: () => ({
       form: new Form({
+        date: '',
+        invoice_no: '',
         stock_category_id: '', 
         supplier_id: '',
         qty: '',
