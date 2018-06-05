@@ -436,6 +436,7 @@
           discounts += billingDiscount.amount
         })
 
+
         this.form.total_amount = Math.floor(parseFloat(this.form.sub_total) + parseFloat(taxes) - parseFloat(discounts))
       }
     }
