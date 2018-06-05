@@ -2,8 +2,8 @@ import * as types from '../mutation-types.js'
 
 const state = {
   api: {
-    baseUrl: 'http://localhost:8080/'
-    // baseUrl: 'http://13.126.244.116:8080/'
+    // baseUrl: 'http://localhost:8080/'
+    baseUrl: 'http://13.126.244.116:8080/'
   },
   company: {
     id: Number,
