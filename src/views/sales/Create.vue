@@ -12,7 +12,7 @@
               >View bills</v-btn>
             </h3>
             <v-spacer></v-spacer>
-            <v-subheader>Total: Rs. {{ total_amount }} /-</v-subheader>
+            <v-subheader>Total: Rs. {{ form.total_amount }} /-</v-subheader>
           </v-card-title> 
 
           <form 
@@ -272,7 +272,8 @@
           }
         ],
         billing_taxes: [],
-        billing_discounts: []
+        billing_discounts: [],
+        total_amount: ''
       }),
       total_amount: '', 
       customers: [],
@@ -435,7 +436,7 @@
           discounts += billingDiscount.amount
         })
 
-        this.total_amount = Math.floor(parseFloat(this.form.sub_total) + parseFloat(taxes) - parseFloat(discounts))
+        this.form.total_amount = Math.floor(parseFloat(this.form.sub_total) + parseFloat(taxes) - parseFloat(discounts))
       }
     }
   }
