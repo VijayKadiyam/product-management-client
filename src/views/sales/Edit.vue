@@ -23,7 +23,6 @@
             <v-card-text>  
 
               <v-text-field prepend-icon="format_list_numbered" name="bill_no" label="Bill No." id="bill_no" type="text" 
-                disabled
                 ref="bill_no" 
                 v-model="form.bill_no" 
                 :rules="[() => !form.errors.has('bill_no') || form.errors.get('bill_no') ]"
