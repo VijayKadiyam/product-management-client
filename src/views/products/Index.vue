@@ -81,6 +81,8 @@
               id: item.id,
               product_category: `
                 ${item.product_category.name}
+                <br>
+                Date: ${item.created_at}
               `,
               product_description: `
                 ${
