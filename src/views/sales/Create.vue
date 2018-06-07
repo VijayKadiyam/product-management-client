@@ -271,11 +271,7 @@
             qty: ''
           }
         ],
-        billing_taxes: [
-          {
-            tax_id: 1
-          }
-        ],
+        billing_taxes: [],
         billing_discounts: [],
         total_amount: ''
       }),
@@ -317,6 +313,9 @@
               text: item.name,
               value: item.id,
               percent: item.tax_percent
+            })
+            this.form.billing_taxes.push({
+              tax_id: item.id
             })
           })
         })
