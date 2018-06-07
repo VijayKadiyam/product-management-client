@@ -271,7 +271,11 @@
             qty: ''
           }
         ],
-        billing_taxes: [],
+        billing_taxes: [
+          {
+            tax_id: 1
+          }
+        ],
         billing_discounts: [],
         total_amount: ''
       }),

@@ -115,7 +115,7 @@
             this.items.push({
               id: item.id,
               customer_details: `
-                <b>Bill No</b>: ${this.bill_format}${item.bill_no}
+                <b>Bill No</b>: ${this.bill_format}${item.bill_no}/18-19
                 <br>
                 <b>Company Name:</b> ${item.customer.name}
                 <br>
