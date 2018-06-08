@@ -116,7 +116,7 @@
               id: item.id,
               customer_details: `
                 <b>Bill No</b>: ${this.bill_format}${item.bill_no}/18-19
-                <br>
+                <br> 
                 <b>Company Name:</b> ${item.customer.name}
                 <br>
                 <b>Address:</b> ${item.customer.address}
